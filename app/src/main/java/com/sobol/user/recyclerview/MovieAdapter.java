@@ -7,13 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by User on 09.04.2018.
- */
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
+
+import static java.lang.System.load;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     static final String[] MOVIES_TITLES = new String[]{"Coco", "Star Wars: The Last Jedi", "Ready Player One", "Black Panther"};
-    static final String[] MOVIES_POSTERS = new String[]{"/eKi8dIrr8voobbaGzDpe8w0PVbC.jpg", "/kOVEVeg59E0wsnXmF9nrh6OmWII.jpg", "/pU1ULUq8D3iRxl1fdX2lZIzdHuI.jpg", "/uxzzxijgPIY7slzFvMotPv8wjKA.jpg"};
+    static final String[] MOVIES_POSTERS = new String[]{"https://www.kinopoisk.ru/film/tayna-koko-2017-679486/", "/kOVEVeg59E0wsnXmF9nrh6OmWII.jpg", "/pU1ULUq8D3iRxl1fdX2lZIzdHuI.jpg", "/uxzzxijgPIY7slzFvMotPv8wjKA.jpg"};
     Context context;
     public MovieAdapter(Context context) {
         this.context = context;
@@ -33,6 +34,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
         String textTitle = MOVIES_TITLES[position];
         String imageTitle = MOVIES_POSTERS[position];
         holder.titleTextView.setText(textTitle);
+        Glide
+                .with(this.context)
+                .load(imageTitle)
+                .into(holder.titleImageView);
     }
 
     @Override
