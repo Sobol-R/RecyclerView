@@ -1,6 +1,7 @@
 package com.sobol.user.recyclerview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,8 +14,7 @@ import com.bumptech.glide.RequestManager;
 import static java.lang.System.load;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
-    static final String[] MOVIES_TITLES = new String[]{"Coco", "Star Wars: The Last Jedi", "Ready Player One", "Black Panther"};
-    static final String[] MOVIES_POSTERS = new String[]{"https://www.kinopoisk.ru/film/tayna-koko-2017-679486/", "/kOVEVeg59E0wsnXmF9nrh6OmWII.jpg", "/pU1ULUq8D3iRxl1fdX2lZIzdHuI.jpg", "/uxzzxijgPIY7slzFvMotPv8wjKA.jpg"};
+
     Context context;
     public MovieAdapter(Context context) {
         this.context = context;
@@ -31,17 +31,29 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        String textTitle = MOVIES_TITLES[position];
-        String imageTitle = MOVIES_POSTERS[position];
-        holder.titleTextView.setText(textTitle);
+        holder.titleTextView.setText(DataBase.MOVIES[position].title);
+
         Glide
                 .with(this.context)
-                .load(imageTitle)
+                .load(DataBase.MOVIES[position].postrepath)
                 .into(holder.titleImageView);
+
+        final Movie movie = DataBase.MOVIES[position];
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startMovieAtivity(movie);
+            }
+        });
+    }
+    private void startMovieAtivity(Movie movie) {
+        Intent intent = new Intent(context, Main2Activity.class);
+        intent.putExtra("MOVIE", movie);
+        context.startActivity(intent);
     }
 
     @Override
     public int getItemCount() {
-        return MOVIES_TITLES.length;
+        return DataBase.MOVIES.length;
     }
 }
