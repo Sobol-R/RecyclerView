@@ -31,22 +31,22 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        holder.titleTextView.setText(DataBase.MOVIES[position].title);
+        holder.titleTextView.setText(PlacesDataBase.PLACES[position].title);
 
         Glide
                 .with(this.context)
-                .load(DataBase.MOVIES[position].postrepath)
+                .load(PlacesDataBase.PLACES[position].imgPath)
                 .into(holder.titleImageView);
 
-        final Movie movie = DataBase.MOVIES[position];
+        final VisitedPlaces visitedPlaces = PlacesDataBase.PLACES[position];
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startMovieAtivity(movie);
+                startMovieAtivity(visitedPlaces);
             }
         });
     }
-    private void startMovieAtivity(Movie movie) {
+    private void startMovieAtivity(VisitedPlaces movie) {
         Intent intent = new Intent(context, Main2Activity.class);
         intent.putExtra("MOVIE", movie);
         context.startActivity(intent);
@@ -54,6 +54,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     @Override
     public int getItemCount() {
-        return DataBase.MOVIES.length;
+        return PlacesDataBase.PLACES.length;
     }
 }
